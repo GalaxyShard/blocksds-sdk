@@ -33,7 +33,11 @@ _start:
 
     adr     r1, __sync_start    // Perform ARM7<->ARM9 sync code
     ldr     r2, =__arm7_start__
-    mov     r3, #(__sync_end - __sync_start)
+
+    mov     r3, 0
+    add     r3, #(__sync_end - __sync_start)
+    // mov     r3, #(__sync_end - __sync_start)
+
     mov     r8, r2
     bl      CopyMem
     mov     r3, r8

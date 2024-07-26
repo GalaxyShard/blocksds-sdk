@@ -27,6 +27,9 @@ void vblank_handler(void)
 
 int main(int argc, char *argv[])
 {
+    (void)argc;
+    (void)argv;
+
     // Initialize sound hardware
     enableSound();
 
@@ -51,7 +54,7 @@ int main(int argc, char *argv[])
         installCameraFIFO();
 
     // Initialize Maxmod. It uses timer 0 internally.
-    mmInstall(FIFO_MAXMOD);
+    // mmInstall(FIFO_MAXMOD);
 
     // This sets a callback that is called when the power button in a DSi
     // console is pressed. It has no effect in a DS.
