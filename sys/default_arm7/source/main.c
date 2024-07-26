@@ -10,7 +10,7 @@
 
 #include <dswifi7.h>
 #include <nds.h>
-#include <maxmod7.h>
+// #include <maxmod7.h>
 
 volatile bool exit_loop = false;
 
@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
         installCameraFIFO();
 
     // Initialize Maxmod. It uses timer 0 internally.
-    mmInstall(FIFO_MAXMOD);
+    // mmInstall(FIFO_MAXMOD);
 
     // This sets a callback that is called when the power button in a DSi
     // console is pressed. It has no effect in a DS.
