@@ -7,6 +7,7 @@
 # -----
 
 MAKE		:= make
+CP		:= cp
 
 # Verbose flag
 # ------------
@@ -20,24 +21,43 @@ endif
 # Targets
 # -------
 
-.PHONY: all clean minimal wifi maxmod libxm wifi_maxmod wifi_libxm
+.PHONY: all clean minimal dswifi maxmod libxm dswifi_maxmod dswifi_libxm
 
-all: minimal wifi maxmod libxm wifi_maxmod wifi_libxm
+all: minimal dswifi maxmod libxm dswifi_maxmod dswifi_libxm
 
 clean:
 	@echo "  CLEAN"
 	@rm -rf build
+	@rm -f arm7.elf arm7_*.elf
 
 minimal:
-	@+$(MAKE) BUILDDIR=build/minimal -f Makefile.generic --no-print-directory
-wifi:
-	@+$(MAKE) BUILDDIR=build/wifi USE_DSWIFI=1 -f Makefile.generic --no-print-directory
-maxmod:
-	@+$(MAKE) BUILDDIR=build/maxmod USE_MAXMOD=1 -f Makefile.generic --no-print-directory
-libxm:
-	@+$(MAKE) BUILDDIR=build/libxm USE_LIBXM7=1 -f Makefile.generic --no-print-directory
-wifi_maxmod:
-	@+$(MAKE) BUILDDIR=build/wifi_maxmod USE_DSWIFI=1 USE_MAXMOD=1 -f Makefile.generic --no-print-directory
-wifi_libxm:
-	@+$(MAKE) BUILDDIR=build/wifi_libxm USE_DSWIFI=1 USE_LIBXM7=1 -f Makefile.generic --no-print-directory
+	@+$(MAKE) -f Makefile.generic --no-print-directory \
+		  NAME=minimal
 
+dswifi:
+	@+$(MAKE) -f Makefile.generic --no-print-directory \
+		  NAME=dswifi \
+		  USE_DSWIFI=1
+
+maxmod:
+	@+$(MAKE) -f Makefile.generic --no-print-directory \
+		  NAME=maxmod \
+		  USE_MAXMOD=1
+
+libxm:
+	@+$(MAKE) -f Makefile.generic --no-print-directory \
+		  NAME=libxm7 \
+		  USE_LIBXM7=1
+
+dswifi_maxmod:
+	@+$(MAKE) -f Makefile.generic --no-print-directory \
+		  NAME=dswifi_maxmod \
+		  USE_DSWIFI=1 \
+		  USE_MAXMOD=1
+	$(V)$(CP) arm7_dswifi_maxmod.elf arm7.elf
+
+dswifi_libxm:
+	@+$(MAKE) -f Makefile.generic --no-print-directory \
+		  NAME=dswifi_libxm \
+		  USE_DSWIFI=1 \
+		  USE_LIBXM7=1

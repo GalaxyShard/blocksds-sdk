@@ -33,9 +33,14 @@ LIBDIRS		:= $(BLOCKSDS)/libs/libnds
 # Build artifacts
 # -----------------
 
-BUILDDIR	?= build
-NAME		:= arm7
-ELF		:= $(BUILDDIR)/$(NAME).elf
+NAME		?= arm7
+ifeq ($(NAME),arm7)
+	BUILDDIR 	:= build
+	ELF 		:= arm7.elf
+else
+	BUILDDIR	:= build/$(NAME)
+	ELF		:= arm7_$(NAME).elf
+endif
 DUMP		:= $(BUILDDIR)/$(NAME).dump
 MAP		:= $(BUILDDIR)/$(NAME).map
 
