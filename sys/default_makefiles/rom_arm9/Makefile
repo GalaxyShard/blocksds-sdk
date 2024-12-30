@@ -18,6 +18,8 @@ GAME_SUBTITLE	?= Built with BlocksDS
 GAME_AUTHOR	?= github.com/blocksds/sdk
 GAME_ICON	?= $(BLOCKSDS)/sys/icon.bmp
 
+BUILTIN_ARM7_CORE	?= main_core/arm7_dswifi_maxmod.elf
+
 # DLDI and internal SD slot of DSi
 # --------------------------------
 
@@ -196,7 +198,7 @@ endif
 $(ROM): $(ELF)
 	@echo "  NDSTOOL $@"
 	$(V)$(BLOCKSDS)/tools/ndstool/ndstool -c $@ \
-		-7 $(BLOCKSDS)/sys/default_arm7/arm7.elf -9 $(ELF) \
+		-7 $(BLOCKSDS)/sys/arm7/$(BUILTIN_ARM7_CORE) -9 $(ELF) \
 		-b $(GAME_ICON) "$(GAME_FULL_TITLE)" \
 		$(NDSTOOL_ARGS)
 
