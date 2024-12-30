@@ -7,7 +7,7 @@
 # -----
 
 MAKE		:= make
-CP		:= cp
+INSTALL		:= install
 
 # Verbose flag
 # ------------
@@ -21,14 +21,14 @@ endif
 # Targets
 # -------
 
-.PHONY: all clean minimal dswifi maxmod libxm dswifi_maxmod dswifi_libxm
+.PHONY: all clean install minimal dswifi maxmod libxm7 dswifi_maxmod dswifi_libxm7
 
-all: minimal dswifi maxmod libxm dswifi_maxmod dswifi_libxm
+all: minimal dswifi maxmod libxm7 dswifi_maxmod dswifi_libxm7
 
 clean:
 	@echo "  CLEAN"
 	@rm -rf build
-	@rm -f arm7.elf arm7_*.elf
+	@rm -f arm7_*.elf
 
 minimal:
 	@+$(MAKE) -f Makefile.generic --no-print-directory \
@@ -44,7 +44,7 @@ maxmod:
 		  NAME=maxmod \
 		  USE_MAXMOD=1
 
-libxm:
+libxm7:
 	@+$(MAKE) -f Makefile.generic --no-print-directory \
 		  NAME=libxm7 \
 		  USE_LIBXM7=1
@@ -54,10 +54,19 @@ dswifi_maxmod:
 		  NAME=dswifi_maxmod \
 		  USE_DSWIFI=1 \
 		  USE_MAXMOD=1
-	$(V)$(CP) arm7_dswifi_maxmod.elf arm7.elf
 
-dswifi_libxm:
+dswifi_libxm7:
 	@+$(MAKE) -f Makefile.generic --no-print-directory \
-		  NAME=dswifi_libxm \
+		  NAME=dswifi_libxm7 \
 		  USE_DSWIFI=1 \
 		  USE_LIBXM7=1
+
+INSTALLDIR	?= /opt/blocksds/core/sys/arm7/main_core
+INSTALLDIR_ABS	:= $(abspath $(INSTALLDIR))
+
+install: all
+	@echo "  INSTALL $(INSTALLDIR_ABS)"
+	@test $(INSTALLDIR_ABS)
+	$(V)$(RM) $(INSTALLDIR_ABS)
+	$(V)$(INSTALL) -d $(INSTALLDIR_ABS)
+	$(V)$(CP) -r arm7_*.elf COPYING $(INSTALLDIR_ABS)
